@@ -31,17 +31,17 @@ const getStaffData = async url => {
 };
 
 function getDateNow(){
-  return moment().format('MMMM Do YYYY');
+  return moment().format('l');
 }
 
 function getTimeNow(){
   return moment().format('LT');
 }
 
-var schoolName = 'Staff';
 var reportType = 'Information';
 var reportSubType = 'Staff Details';
-var dueDate = '20/09/2019'
+var schoolName = 'Ladies College - Colombo';
+var dueDate = '24/09/2019';
 
 async function generateReport() {
   const reportData = await getStaffData(url.allStaff);
@@ -96,9 +96,14 @@ async function generateReport() {
         margin: 10,
         columns: [
           {
-            text: getDateNow() + '    ' + getTimeNow(),
+            text: 'Printed Date: ' + getDateNow() + ' and Time: ' + getTimeNow(),
             style: 'planText',
             alignment: 'left'
+          },
+          {
+            text: reportType + ' - ' + reportSubType,
+            style: 'planText',
+            alignment: 'center'
           },
           {
             text: 'Page ' + currentPage.toString() + ' of ' + pageCount,
@@ -164,7 +169,7 @@ async function generateReport() {
   var now = new Date();
 
   var pdf = pdfmake.createPdf(dd);
-  pdf.write('pdfs/LC_new_new_new.pdf');
+  pdf.write('pdfs/LCstaffDetails.pdf');
 
   console.log(new Date() - now);
 };

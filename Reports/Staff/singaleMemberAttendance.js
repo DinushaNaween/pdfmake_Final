@@ -21,7 +21,7 @@ var fonts = {
 pdfmake.setFonts(fonts);
 
 var startDay = '2019-05-23';
-var endDay = '2019-05-26';
+var endDay = '2019-06-17';
 var staffNo = 90;
 
 var body = {
@@ -66,13 +66,12 @@ async function generateReport() {
   function buildTableBody(data){
     var body = [];
 
-    body.push([{ text: 'No', style: 'tableHeader', alignment: 'center' }, { text: 'Attendance ID', style: 'tableHeader', alignment: 'center' }, { text: 'Punch date', style: 'tableHeader', alignment: 'center' }, { text: 'In Time', style: 'tableHeader', alignment: 'center' }, { text: 'Out Time', style: 'tableHeader', alignment: 'center' }])
+    body.push([{ text: 'No', style: 'tableHeader', alignment: 'center' }, { text: 'Punch date', style: 'tableHeader', alignment: 'center' }, { text: 'In Time', style: 'tableHeader', alignment: 'center' }, { text: 'Out Time', style: 'tableHeader', alignment: 'center' }])
 
     for(var i=0; i<data.length; i++){
       var dataRow = [];
 
       dataRow.push({ text: i+1, alignment: 'center' });
-      dataRow.push({ text: data[i].attendanceId, alignment: 'center' });
       dataRow.push({ text: data[i].punchDate.slice(0,10), alignment: 'center' });
       dataRow.push({ text: data[i].inTime, alignment: 'center' });
       dataRow.push({ text: data[i].outTime, alignment: 'center' });
@@ -86,7 +85,7 @@ async function generateReport() {
   function table(data){
     return {
       table: {
-        widths: ['17%', '19%', '25%', '22%', '22%'],
+        widths: ['21%', '29%', '27%', '27%'],
         headerRows: 1,
         body: buildTableBody(data)
       }, 
