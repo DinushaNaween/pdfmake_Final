@@ -6,9 +6,12 @@ const allStaff = "http://dev.aspitio.com:81/api/staff";
 
 const periodAttendance = "http://dev.aspitio.com:81/api/attendance/period";
 
+const singlePersonAttendance = "http://dev.aspitio.com:81/api/attendance/period/staff";
+
 module.exports = {
     allNotes: allNotes,
     allAttendance: allAttendance,
     allStaff: allStaff,
-    periodAttendance: periodAttendance
+    periodAttendance: periodAttendance,
+    singlePersonAttendance: singlePersonAttendance
 }
