@@ -1,6 +1,7 @@
 var fetch = require('node-fetch');
-var url = require('../url');
-var pdfmake = require('../js/index');
+var url = require('../../url');
+var pdfmake = require('../../js/index');
+var moment = require('moment');
 
 var fonts = {
   Roboto: {
@@ -17,7 +18,6 @@ var fonts = {
   }
 };
 
-var pdfmake = require('../js/index');
 pdfmake.setFonts(fonts);
 
 const getStaffData = async url => {
@@ -30,10 +30,18 @@ const getStaffData = async url => {
   }
 };
 
-var schoolName = 'Staff';
+function getDateNow(){
+  return moment().format('l');
+}
+
+function getTimeNow(){
+  return moment().format('LT');
+}
+
 var reportType = 'Information';
 var reportSubType = 'Staff Details';
-var dueDate = '20/09/2019'
+var schoolName = 'Ladies College - Colombo';
+var dueDate = '24/09/2019';
 
 async function generateReport() {
   const reportData = await getStaffData(url.allStaff);
@@ -44,7 +52,7 @@ async function generateReport() {
 
     body.push([{ text: 'Staff ID', style: 'tableHeader' }, { text: 'Full Name', style: 'tableHeader' }, { text: 'Section', style: 'tableHeader' }, { text: 'Designation', style: 'tableHeader' }, { text: 'E-Mail', style: 'tableHeader' }, { text: 'Gender', style: 'tableHeader' }])
 
-    for(var i=0; i<data.length; i++){
+    for(var i=0; i<data.length-1; i++){
       var dataRow = [];
 
       dataRow.push(data[i].staffId);
@@ -63,12 +71,22 @@ async function generateReport() {
   function table(data){
     return {
       table: {
-        widths: ['6%', '43%', '15%', '10%', '20%', '10%'],
+        dontBreakRows: true,
+        keepWithHeaderRows: false,
+        widths: ['6%', '41%', '15%', '14%', '20%', '8%'],
         headerRows: 1,
         body: buildTableBody(data)
       }, 
         fontSize: 9, 
-        absolutePosition: { x: 18, y: 90 }
+        absolutePosition: { x: 18, y: 90 },
+        layout: {
+          hLineWidth: function(i, node) {
+            return (i === 0 || i === node.table.body.length) ? 0.1 : 0.1;
+          },
+          vLineWidth: function(i, node) {
+            return (i === 0 || i === node.table.widths.length) ? 0.1 : 0.1;
+          }
+        }
     }
   }
 
@@ -78,9 +96,14 @@ async function generateReport() {
         margin: 10,
         columns: [
           {
-            text: 'Date: 20/09/2019    Time: 9.45 AM',
+            text: 'Printed Date: ' + getDateNow() + ' and Time: ' + getTimeNow(),
             style: 'planText',
             alignment: 'left'
+          },
+          {
+            text: reportType + ' - ' + reportSubType,
+            style: 'planText',
+            alignment: 'center'
           },
           {
             text: 'Page ' + currentPage.toString() + ' of ' + pageCount,
@@ -102,7 +125,7 @@ async function generateReport() {
         ], absolutePosition: { x: 34, y: 15 }
       },
       {
-        image: '../Reports/Images/Capture.PNG',
+        image: './Images/Capture.PNG',
         width: 50,
         absolutePosition: { x: 13, y: 25 }
       },
@@ -136,6 +159,9 @@ async function generateReport() {
       planText: {
         fontSize: 10
       }
+    },
+    defaultStyle: {
+      font: 'Tinos'
     }
 
   }
@@ -143,7 +169,7 @@ async function generateReport() {
   var now = new Date();
 
   var pdf = pdfmake.createPdf(dd);
-  pdf.write('pdfs/LC.pdf');
+  pdf.write('pdfs/LCstaffDetails.pdf');
 
   console.log(new Date() - now);
 };
