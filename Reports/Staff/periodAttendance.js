@@ -165,7 +165,8 @@ async function generateReport() {
         fontSize: 12
       },
       tableHeader: {
-        fontSize: 11
+        fontSize: 11, 
+        bold: true
       },
       planText: {
         fontSize: 10

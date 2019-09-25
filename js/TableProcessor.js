@@ -183,7 +183,11 @@ class TableProcessor {
             cellAbove = body[lineIndex - 1][i];
             bottomBorder = cellAbove.border ? cellAbove.border[3] : this.layout.defaultBorder;
 
+<<<<<<< HEAD
             if (bottomBorder && cellAbove.borderColor) {
+=======
+            if (cellAbove.borderColor) {
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
               borderColor = cellAbove.borderColor[3];
             }
           } // the current cell
@@ -193,7 +197,11 @@ class TableProcessor {
             currentCell = body[lineIndex][i];
             topBorder = currentCell.border ? currentCell.border[1] : this.layout.defaultBorder;
 
+<<<<<<< HEAD
             if (topBorder && borderColor == null && currentCell.borderColor) {
+=======
+            if (borderColor == null && currentCell.borderColor) {
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
               borderColor = currentCell.borderColor[1];
             }
           }
@@ -205,7 +213,11 @@ class TableProcessor {
           rowCellAbove = body[lineIndex - 1 - cellAbove._rowSpanCurrentOffset][i];
           rowBottomBorder = rowCellAbove && rowCellAbove.border ? rowCellAbove.border[3] : this.layout.defaultBorder;
 
+<<<<<<< HEAD
           if (rowBottomBorder && rowCellAbove && rowCellAbove.borderColor) {
+=======
+          if (rowCellAbove && rowCellAbove.borderColor) {
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
             borderColor = rowCellAbove.borderColor[3];
           }
         }
@@ -297,9 +309,13 @@ class TableProcessor {
       cellBefore = body[vLineRowIndex][beforeVLineColIndex];
 
       if (cellBefore && cellBefore.borderColor) {
+<<<<<<< HEAD
         if (cellBefore.border ? cellBefore.border[2] : this.layout.defaultBorder) {
           borderColor = cellBefore.borderColor[2];
         }
+=======
+        borderColor = cellBefore.borderColor[2];
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
       }
     } // the current cell
 
@@ -308,9 +324,13 @@ class TableProcessor {
       currentCell = body[vLineRowIndex][vLineColIndex];
 
       if (currentCell && currentCell.borderColor) {
+<<<<<<< HEAD
         if (currentCell.border ? currentCell.border[0] : this.layout.defaultBorder) {
           borderColor = currentCell.borderColor[0];
         }
+=======
+        borderColor = currentCell.borderColor[0];
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
       }
     }
 
@@ -318,9 +338,13 @@ class TableProcessor {
       var rowCellBeforeAbove = body[vLineRowIndex - cellBefore._rowSpanCurrentOffset][beforeVLineColIndex];
 
       if (rowCellBeforeAbove.borderColor) {
+<<<<<<< HEAD
         if (rowCellBeforeAbove.border ? rowCellBeforeAbove.border[2] : this.layout.defaultBorder) {
           borderColor = rowCellBeforeAbove.borderColor[2];
         }
+=======
+        borderColor = rowCellBeforeAbove.borderColor[2];
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
       }
     }
 
@@ -328,9 +352,13 @@ class TableProcessor {
       var rowCurrentCellAbove = body[vLineRowIndex - currentCell._rowSpanCurrentOffset][vLineColIndex];
 
       if (rowCurrentCellAbove.borderColor) {
+<<<<<<< HEAD
         if (rowCurrentCellAbove.border ? rowCurrentCellAbove.border[2] : this.layout.defaultBorder) {
           borderColor = rowCurrentCellAbove.borderColor[2];
         }
+=======
+        borderColor = rowCurrentCellAbove.borderColor[2];
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
       }
     }
 

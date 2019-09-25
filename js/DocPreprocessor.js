@@ -252,7 +252,11 @@ class DocPreprocessor {
   }
 
   preprocessImage(node) {
+<<<<<<< HEAD
     if (node.image.type !== undefined && node.image.data !== undefined && node.image.type === 'Buffer' && (0, _variableType.isArray)(node.image.data)) {
+=======
+    if (!(0, _variableType.isUndefined)(node.image.type) && !(0, _variableType.isUndefined)(node.image.data) && node.image.type === 'Buffer' && (0, _variableType.isArray)(node.image.data)) {
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
       node.image = Buffer.from(node.image.data);
     }
 

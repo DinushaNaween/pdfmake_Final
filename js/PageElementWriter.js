@@ -3,6 +3,11 @@
 exports.__esModule = true;
 exports.default = void 0;
 
+<<<<<<< HEAD
+=======
+var _variableType = require("./helpers/variableType");
+
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
 var _ElementWriter = _interopRequireDefault(require("./ElementWriter"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -64,7 +69,11 @@ class PageElementWriter extends _ElementWriter.default {
     // call for table in first column and then for table in the second column (is other repeatables).
 
     this.repeatables.forEach(function (rep) {
+<<<<<<< HEAD
       if (rep.insertedOnPages[this.context().page] === undefined) {
+=======
+      if ((0, _variableType.isUndefined)(rep.insertedOnPages[this.context().page])) {
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
         rep.insertedOnPages[this.context().page] = true;
         this.addFragment(rep, true);
       } else {

@@ -53,7 +53,6 @@ function getTimeNow(){
 }
 
 var reportType = 'Staff';
-// var reportSubType = 'Attendance Report';
 var schoolName = 'Ladies College - Colombo';
 var dueDate = 'From: ' + startDay + '   To: ' + endDay;
 
@@ -62,6 +61,7 @@ async function generateReport() {
   // console.log(reportData);
 
   var reportSubType = 'Attendance Report - '+ reportData[0].staffName;
+  var idForFooter = reportData[0].staffNo;
 
   function buildTableBody(data){
     var body = [];
@@ -113,7 +113,7 @@ async function generateReport() {
             alignment: 'left'
           },
           {
-            text: reportType + ' - ' + reportSubType,
+            text: 'Staff No: ' + idForFooter,
             style: 'planText',
             alignment: 'center'
           },
@@ -167,7 +167,8 @@ async function generateReport() {
         fontSize: 12
       },
       tableHeader: {
-        fontSize: 11
+        fontSize: 11,
+        bold: true
       },
       planText: {
         fontSize: 10

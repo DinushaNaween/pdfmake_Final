@@ -61,7 +61,11 @@ const splitWords = (text, noWrap) => {
 const getFirstWord = (words, noWrap) => {
   let word = words[0];
 
+<<<<<<< HEAD
   if (word === undefined) {
+=======
+  if ((0, _variableType.isUndefined)(word)) {
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
     return null;
   }
 
@@ -69,7 +73,11 @@ const getFirstWord = (words, noWrap) => {
     // text was not wrapped, we need only first word
     let tmpWords = splitWords(word.text, false);
 
+<<<<<<< HEAD
     if (tmpWords[0] === undefined) {
+=======
+    if ((0, _variableType.isUndefined)(tmpWords[0])) {
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
       return null;
     }
 
@@ -88,7 +96,11 @@ const getFirstWord = (words, noWrap) => {
 const getLastWord = (words, noWrap) => {
   let word = words[words.length - 1];
 
+<<<<<<< HEAD
   if (word === undefined) {
+=======
+  if ((0, _variableType.isUndefined)(word)) {
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
     return null;
   }
 
@@ -100,7 +112,11 @@ const getLastWord = (words, noWrap) => {
     // text was not wrapped, we need only last word
     let tmpWords = splitWords(word.text, false);
 
+<<<<<<< HEAD
     if (tmpWords[tmpWords.length - 1] === undefined) {
+=======
+    if ((0, _variableType.isUndefined)(tmpWords[tmpWords.length - 1])) {
+>>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
       return null;
     }
 
