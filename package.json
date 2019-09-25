@@ -47,7 +47,8 @@
   "scripts": {
     "build": "gulp build",
     "test": "gulp",
-    "playground": "node dev-playground/server.js"
+    "playground": "node dev-playground/server.js",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",

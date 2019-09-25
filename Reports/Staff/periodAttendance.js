@@ -186,4 +186,6 @@ async function generateReport() {
   console.log(new Date() - now);
 };
 
-generateReport();
+module.exports = {
+  periodAttendance: generateReport()
+}

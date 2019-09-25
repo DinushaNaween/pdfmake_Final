@@ -27,7 +27,7 @@ app.get('/', (req, res, next) => {
   })
 })
 
-app.use('/lc', testRoutes);
+app.use('/test', testRoutes);
 
 app.use((req, res, next) => {
   const error = new Error('Not Found');
