@@ -183,7 +183,7 @@ async function generateReport() {
   var now = new Date();
 
   var pdf = pdfmake.createPdf(dd);
-  pdf.write('pdfs/LCsinglePersonAttendance.pdf');
+  pdf.write('../../../pdfs/Staff/LCsinglePersonAttendance.pdf');
 
   console.log(new Date() - now);
 };

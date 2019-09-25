@@ -170,7 +170,7 @@ async function generateReport() {
   var now = new Date();
 
   var pdf = pdfmake.createPdf(dd);
-  pdf.write('pdfs/LCstaffDetails.pdf');
+  pdf.write('../../../pdfs/LC/LCstaffDetails.pdf');
 
   var runtime = new Date() - now
   console.log("Run Time: " + runtime + " ms")
