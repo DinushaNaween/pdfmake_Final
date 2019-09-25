@@ -50,7 +50,7 @@ async function generateReport() {
   function buildTableBody(data){
     var body = [];
 
-    body.push([{ text: 'Staff ID', style: 'tableHeader' }, { text: 'Full Name', style: 'tableHeader' }, { text: 'Section', style: 'tableHeader' }, { text: 'Designation', style: 'tableHeader' }, { text: 'E-Mail', style: 'tableHeader' }, { text: 'Gender', style: 'tableHeader' }])
+    body.push([{ text: 'ID', style: 'tableHeader' }, { text: 'Full Name', style: 'tableHeader' }, { text: 'Section', style: 'tableHeader' }, { text: 'Designation', style: 'tableHeader' }, { text: 'E-Mail', style: 'tableHeader' }, { text: 'Gender', style: 'tableHeader' }])
 
     for(var i=0; i<data.length-1; i++){
       var dataRow = [];
@@ -154,7 +154,8 @@ async function generateReport() {
         fontSize: 12
       },
       tableHeader: {
-        fontSize: 11
+        fontSize: 11,
+        bold: true
       },
       planText: {
         fontSize: 10
