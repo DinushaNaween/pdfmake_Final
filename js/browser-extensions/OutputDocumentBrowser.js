@@ -9,10 +9,6 @@ var _fileSaver = require("file-saver");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-<<<<<<< HEAD
-=======
-//import { isNull } from '../helpers/variableType';
->>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
 const bufferToBlob = buffer => {
   let blob;
 
@@ -103,11 +99,7 @@ class OutputDocumentBrowser extends _OutputDocument.default {
           	resolve();
           } else {
           	setTimeout(() => {
-<<<<<<< HEAD
           		if (win.window === null) { // is closed by AdBlock
-=======
-          		if (isNull(win.window)) { // is closed by AdBlock
->>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
           			window.location.href = pdfUrl; // open in actual window
           		}
           		resolve();

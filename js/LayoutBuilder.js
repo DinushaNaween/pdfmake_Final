@@ -228,15 +228,11 @@ class LayoutBuilder {
     }
 
     watermark.font = watermark.font || defaultStyle.font || 'Roboto';
-<<<<<<< HEAD
     watermark.fontSize = watermark.fontSize || 'auto';
-=======
->>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
     watermark.color = watermark.color || 'black';
     watermark.opacity = watermark.opacity || 0.6;
     watermark.bold = watermark.bold || false;
     watermark.italics = watermark.italics || false;
-<<<<<<< HEAD
     watermark.angle = (0, _variableType.isValue)(watermark.angle) ? watermark.angle : null;
 
     if (watermark.angle === null) {
@@ -256,22 +252,12 @@ class LayoutBuilder {
       angle: watermark.angle
     };
     watermarkObject._size = getWatermarkSize(watermark, pdfDocument);
-=======
-    let watermarkObject = {
-      text: watermark.text,
-      font: pdfDocument.provideFont(watermark.font, watermark.bold, watermark.italics),
-      size: getSize(this.pageSize, watermark, pdfDocument),
-      color: watermark.color,
-      opacity: watermark.opacity
-    };
->>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
     let pages = this.writer.context().pages;
 
     for (let i = 0, l = pages.length; i < l; i++) {
       pages[i].watermark = watermarkObject;
     }
 
-<<<<<<< HEAD
     function getWatermarkSize(watermark, pdfDocument) {
       let textInlines = new _TextInlines.default(pdfDocument);
       let styleContextStack = new _StyleContextStack.default(null, {
@@ -291,25 +277,13 @@ class LayoutBuilder {
     }
 
     function getWatermarkFontSize(pageSize, watermark, pdfDocument) {
-=======
-    function getSize(pageSize, watermark, pdfDocument) {
-      let width = pageSize.width;
-      let height = pageSize.height;
-      let targetWidth = Math.sqrt(width * width + height * height) * 0.8;
-      /* page diagonal * sample factor */
-
->>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
       let textInlines = new _TextInlines.default(pdfDocument);
       let styleContextStack = new _StyleContextStack.default(null, {
         font: watermark.font,
         bold: watermark.bold,
         italics: watermark.italics
       });
-<<<<<<< HEAD
       let rotatedSize;
-=======
-      let size;
->>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
       /**
        * Binary search the best font size.
        * Initial bounds [0, 1000]
@@ -324,21 +298,12 @@ class LayoutBuilder {
         styleContextStack.push({
           fontSize: c
         });
-<<<<<<< HEAD
         rotatedSize = textInlines.sizeOfRotatedText(watermark.text, watermark.angle, styleContextStack);
 
         if (rotatedSize.width > pageSize.width) {
           b = c;
           c = (a + b) / 2;
         } else if (rotatedSize.width < pageSize.width) {
-=======
-        size = textInlines.sizeOfText(watermark.text, styleContextStack);
-
-        if (size.width > targetWidth) {
-          b = c;
-          c = (a + b) / 2;
-        } else if (size.width < targetWidth) {
->>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
           a = c;
           c = (a + b) / 2;
         }
@@ -350,14 +315,7 @@ class LayoutBuilder {
        */
 
 
-<<<<<<< HEAD
       return c;
-=======
-      return {
-        size: size,
-        fontSize: c
-      };
->>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
     }
   }
 

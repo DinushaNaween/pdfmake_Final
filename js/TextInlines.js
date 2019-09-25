@@ -218,7 +218,6 @@ class TextInlines {
       descender: font.descender / 1000 * fontSize
     };
   }
-<<<<<<< HEAD
   /**
    * Returns size of the specified rotated string (without breaking it) using the current style
    *
@@ -236,8 +235,6 @@ class TextInlines {
       height: size.width * Math.sin(angle * Math.PI / -180) + size.height * Math.cos(angle * Math.PI / -180)
     };
   }
-=======
->>>>>>> a04d3daefc401b1317288b55a229defb806e4eef
 
 }
 
