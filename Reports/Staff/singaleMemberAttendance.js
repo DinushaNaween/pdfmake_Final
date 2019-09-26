@@ -3,21 +3,24 @@ var url = require('../../url');
 var pdfmake = require('../../js/index');
 var moment = require('moment');
 
+let fontPath = './Reports/LC/fonts/';
+let imagePath = './Reports/LC/Images/';
+
 var fonts = {
   Roboto: {
-    normal: 'fonts/Roboto-Regular.ttf',
-    bold: 'fonts/Roboto-Medium.ttf',
-    italics: 'fonts/Roboto-Italic.ttf',
-    bolditalics: 'fonts/Roboto-MediumItalic.ttf'
+    normal: fontPath + 'Roboto-Regular.ttf',
+    bold: fontPath + 'Roboto-Medium.ttf',
+    italics: fontPath + 'Roboto-Italic.ttf',
+    bolditalics: fontPath + 'Roboto-MediumItalic.ttf'
   },
   Tinos: {
-    normal: 'fonts/Tinos-Regular.ttf',
-    bold: 'fonts/Tinos-Bold.ttf',
-    italics: 'fonts/Tinos-Italic.ttf',
-    bolditalics: 'fonts/Tinos-BoldItalic.ttf'
+    normal: fontPath + 'Tinos-Regular.ttf',
+    bold: fontPath + 'Tinos-Bold.ttf',
+    italics: fontPath + 'Tinos-Italic.ttf',
+    bolditalics: fontPath + 'Tinos-BoldItalic.ttf'
   }
 };
-
+ 
 pdfmake.setFonts(fonts);
 
 var startDay = '2019-05-23';
@@ -137,7 +140,7 @@ async function generateReport() {
         ], absolutePosition: { x: 34, y: 15 }
       },
       {
-        image: './Images/Capture.PNG',
+        image: imagePath + 'Capture.PNG',
         width: 50,
         absolutePosition: { x: 13, y: 25 }
       },
@@ -149,7 +152,7 @@ async function generateReport() {
       {
         text: schoolName,
         style: 'subHeader',
-        absolutePosition: { x: 78, y: 55 }
+        absolutePosition: { x: 78, y: 55 } 
       },
       {
         text: dueDate,
@@ -177,16 +180,15 @@ async function generateReport() {
     defaultStyle: {
       font: 'Tinos'
     }
-
   }
 
   var now = new Date();
 
   var pdf = pdfmake.createPdf(dd);
-  pdf.write('../../../pdfs/Staff/LCsinglePersonAttendance.pdf');
+  pdf.write('../pdfs/Staff/LCsinglePersonAttendance.pdf');
 
   var runtime = new Date() - now
   console.log("Run Time: " + runtime + " ms")
 };
 
-generateReport();
+module.exports.generateSingleMemberAttendanceReport = generateReport;

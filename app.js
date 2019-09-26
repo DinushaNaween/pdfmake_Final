@@ -1,8 +1,9 @@
-var express = require('express');
-var app = express();
-var bodyparser = require('body-parser');
+let express = require('express');
+let app = express();
+let bodyparser = require('body-parser');
 
-var testRoutes = require('./Reports/test/testServer');
+let LCRoutes = require('./Reports/Routes/LC');
+let StaffRoutes = require('./Reports/Routes/Staff');
 
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
@@ -27,7 +28,8 @@ app.get('/', (req, res, next) => {
   })
 })
 
-app.use('/test', testRoutes);
+app.use('/LC', LCRoutes);
+app.use('/Staff', StaffRoutes);
 
 app.use((req, res, next) => {
   const error = new Error('Not Found');

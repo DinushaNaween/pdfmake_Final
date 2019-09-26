@@ -2,12 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 var staffReports = require('../LC/staffDetails');
-// var periodAttendance = require('../Staff/periodAttendance');
 
-router.post('/reportTest', (req, res, next) => {
+router.post('/StaffDetails', (req, res) => {
   console.log('testRoute');
   if(req.body.report === 'ok'){
-    staffReports.generateReport();
+    staffReports.generateStaffDetailsReport();
     res.status(200).json({
       state: true
     })
