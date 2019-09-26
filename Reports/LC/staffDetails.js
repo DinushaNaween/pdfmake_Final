@@ -44,8 +44,9 @@ var schoolName = 'Ladies College - Colombo';
 var dueDate = moment().format('L');
 
 async function generateReport() {
+  console.log('staffDetail function');
   const reportData = await getStaffData(url.allStaff);
-  // console.log(reportData);
+  console.log(reportData[0]);
 
   function buildTableBody(data){
     var body = [];
@@ -74,7 +75,7 @@ async function generateReport() {
         dontBreakRows: true,
         keepWithHeaderRows: false,
         widths: ['6%', '41%', '15%', '14%', '20%', '8%'],
-        headerRows: 1,
+        headerRows: 1, 
         body: buildTableBody(data)
       }, 
         fontSize: 9, 
@@ -176,4 +177,6 @@ async function generateReport() {
   console.log("Run Time: " + runtime + " ms")
 };
 
-generateReport();
+module.exports.generateReport = generateReport;
+
+// generateReport() 

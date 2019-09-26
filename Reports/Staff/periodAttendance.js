@@ -187,4 +187,6 @@ async function generateReport() {
   console.log("Run Time: " + runtime + " ms")
 };
 
-generateReport();
+module.exports = {
+  periodAttendance: generateReport()
+}
