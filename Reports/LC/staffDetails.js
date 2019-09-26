@@ -46,7 +46,7 @@ var dueDate = moment().format('L');
 async function generateReport() {
   console.log('staffDetail function');
   const reportData = await getStaffData(url.allStaff);
-  // console.log(reportData);
+  console.log(reportData[0]);
 
   function buildTableBody(data){
     var body = [];
@@ -177,6 +177,6 @@ async function generateReport() {
   console.log("Run Time: " + runtime + " ms")
 };
 
-// module.exports.generateReport = generateReport;
+module.exports.generateReport = generateReport;
 
-generateReport()
+// generateReport() 

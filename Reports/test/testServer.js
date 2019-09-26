@@ -7,7 +7,7 @@ var staffReports = require('../LC/staffDetails');
 router.post('/reportTest', (req, res, next) => {
   console.log('testRoute');
   if(req.body.report === 'ok'){
-    staffReports.generateReport()
+    staffReports.generateReport();
     res.status(200).json({
       state: true
     })
@@ -18,4 +18,4 @@ router.post('/reportTest', (req, res, next) => {
   }
 })
 
-module.exports = router;
+module.exports = router; 
