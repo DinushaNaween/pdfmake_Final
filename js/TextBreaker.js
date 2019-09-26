@@ -61,7 +61,7 @@ const splitWords = (text, noWrap) => {
 const getFirstWord = (words, noWrap) => {
   let word = words[0];
 
-  if ((0, _variableType.isUndefined)(word)) {
+  if (word === undefined) {
     return null;
   }
 
@@ -69,7 +69,7 @@ const getFirstWord = (words, noWrap) => {
     // text was not wrapped, we need only first word
     let tmpWords = splitWords(word.text, false);
 
-    if ((0, _variableType.isUndefined)(tmpWords[0])) {
+    if (tmpWords[0] === undefined) {
       return null;
     }
 
@@ -88,7 +88,7 @@ const getFirstWord = (words, noWrap) => {
 const getLastWord = (words, noWrap) => {
   let word = words[words.length - 1];
 
-  if ((0, _variableType.isUndefined)(word)) {
+  if (word === undefined) {
     return null;
   }
 
@@ -100,7 +100,7 @@ const getLastWord = (words, noWrap) => {
     // text was not wrapped, we need only last word
     let tmpWords = splitWords(word.text, false);
 
-    if ((0, _variableType.isUndefined)(tmpWords[tmpWords.length - 1])) {
+    if (tmpWords[tmpWords.length - 1] === undefined) {
       return null;
     }
 

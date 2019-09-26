@@ -181,9 +181,10 @@ async function generateReport() {
   var now = new Date();
 
   var pdf = pdfmake.createPdf(dd);
-  pdf.write('pdfs/LCperiodAttendance.pdf');
+  pdf.write('../../../pdfs/Staff/LCperiodAttendance.pdf');
 
-  console.log(new Date() - now);
+  var runtime = new Date() - now
+  console.log("Run Time: " + runtime + " ms")
 };
 
 module.exports = {

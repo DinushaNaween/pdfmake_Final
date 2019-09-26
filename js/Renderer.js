@@ -7,8 +7,6 @@ var _TextDecorator = _interopRequireDefault(require("./TextDecorator"));
 
 var _TextInlines = _interopRequireDefault(require("./TextInlines"));
 
-var _variableType = require("./helpers/variableType");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var getSvgToPDF = function () {
@@ -97,7 +95,7 @@ class Renderer {
       let diffWidth;
       let textInlines = new _TextInlines.default(null);
 
-      if ((0, _variableType.isUndefined)(_pageNodeRef.positions)) {
+      if (_pageNodeRef.positions === undefined) {
         throw new Error('Page reference id not found');
       }
 
@@ -313,14 +311,13 @@ class Renderer {
     this.pdfDocument.fill(watermark.color);
     this.pdfDocument.opacity(watermark.opacity);
     this.pdfDocument.save();
-    let angle = Math.atan2(this.pdfDocument.page.height, this.pdfDocument.page.width) * -180 / Math.PI;
-    this.pdfDocument.rotate(angle, {
+    this.pdfDocument.rotate(watermark.angle, {
       origin: [this.pdfDocument.page.width / 2, this.pdfDocument.page.height / 2]
     });
-    let x = this.pdfDocument.page.width / 2 - watermark.size.size.width / 2;
-    let y = this.pdfDocument.page.height / 2 - watermark.size.size.height / 4;
+    let x = this.pdfDocument.page.width / 2 - watermark._size.size.width / 2;
+    let y = this.pdfDocument.page.height / 2 - watermark._size.size.height / 2;
     this.pdfDocument._font = watermark.font;
-    this.pdfDocument.fontSize(watermark.size.fontSize);
+    this.pdfDocument.fontSize(watermark.fontSize);
     this.pdfDocument.text(watermark.text, x, y, {
       lineBreak: false
     });

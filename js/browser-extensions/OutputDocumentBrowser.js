@@ -9,7 +9,6 @@ var _fileSaver = require("file-saver");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//import { isNull } from '../helpers/variableType';
 const bufferToBlob = buffer => {
   let blob;
 
@@ -100,7 +99,7 @@ class OutputDocumentBrowser extends _OutputDocument.default {
           	resolve();
           } else {
           	setTimeout(() => {
-          		if (isNull(win.window)) { // is closed by AdBlock
+          		if (win.window === null) { // is closed by AdBlock
           			window.location.href = pdfUrl; // open in actual window
           		}
           		resolve();

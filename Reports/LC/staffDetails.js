@@ -41,7 +41,7 @@ function getTimeNow(){
 var reportType = 'Information';
 var reportSubType = 'Staff Details';
 var schoolName = 'Ladies College - Colombo';
-var dueDate = '24/09/2019';
+var dueDate = moment().format('L');
 
 async function generateReport() {
   console.log('staffDetail function');
@@ -171,9 +171,10 @@ async function generateReport() {
   var now = new Date();
 
   var pdf = pdfmake.createPdf(dd);
-  pdf.write('pdfs/LCstaffDetails.pdf');
+  pdf.write('../../../pdfs/LC/LCstaffDetails.pdf');
 
-  console.log(new Date() - now);
+  var runtime = new Date() - now
+  console.log("Run Time: " + runtime + " ms")
 };
 
 // module.exports.generateReport = generateReport;
