@@ -165,7 +165,8 @@ async function generateReport() {
         fontSize: 12
       },
       tableHeader: {
-        fontSize: 11
+        fontSize: 11, 
+        bold: true
       },
       planText: {
         fontSize: 10
@@ -180,9 +181,10 @@ async function generateReport() {
   var now = new Date();
 
   var pdf = pdfmake.createPdf(dd);
-  pdf.write('pdfs/LCperiodAttendance.pdf');
+  pdf.write('../../../pdfs/Staff/LCperiodAttendance.pdf');
 
-  console.log(new Date() - now);
+  var runtime = new Date() - now
+  console.log("Run Time: " + runtime + " ms")
 };
 
 generateReport();

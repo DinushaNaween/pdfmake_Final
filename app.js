@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyparser = require('body-parser');
 
-var testRoutes = require('./Reports/LC/test');
+var testRoutes = require('./Reports/test/testServer');
 
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
