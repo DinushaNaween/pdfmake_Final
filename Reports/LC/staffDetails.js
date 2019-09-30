@@ -5,6 +5,7 @@ let moment = require('moment');
 
 let fontPath = './Reports/LC/fonts/';
 let imagePath = './Reports/LC/Images/';
+let leftMargin = 30;
 
 let fonts = {
   Roboto: {
@@ -47,20 +48,26 @@ let schoolName = 'Ladies College - Colombo';
 let dueDate = moment().format('L');
 
 async function generateReport() {
-  console.log('staffDetail function');
+  console.log('Generating Report...');
   const reportData = await getStaffData(url.allStaff);
-  console.log(reportData[0].epfName);
+  console.log(reportData[0]);
+  console.log(reportData[1]);
+  console.log(reportData[2]);
+  console.log(reportData[3]);
+  console.log(reportData[4]);
+  console.log(reportData[5]);
+  console.log(reportData[6]);
 
   function buildTableBody(data){
     let body = [];
 
     body.push([{ text: 'ID', style: 'tableHeader' }, { text: 'Full Name', style: 'tableHeader' }, { text: 'Section', style: 'tableHeader' }, { text: 'Designation', style: 'tableHeader' }, { text: 'E-Mail', style: 'tableHeader' }, { text: 'Gender', style: 'tableHeader' }])
 
-    for(let i=0; i<data.length-1; i++){
+    for(let i=0; i<40; i++){
       let dataRow = [];
 
       dataRow.push(data[i].staffId);
-      dataRow.push(data[i].fullName);
+      dataRow.push(data[i].fullName); 
       dataRow.push(data[i].section);
       dataRow.push(data[i].designation);
       dataRow.push(data[i].email);
@@ -69,20 +76,24 @@ async function generateReport() {
       body.push(dataRow);
     }
 
+    // body.push([{ text: 'L456' }, { text: 'testing full name' }, { text: 'testing section' }, { text: 'designation' }, { text: 'testing email' }, { text: 'female' }]);
+    // body.push([{ text: 'LN456' }, { text: 'testing full name' }, { text: 'testing section' }, { text: 'designation' }, { text: 'testing email' }, { text: 'female' }]);
+    // body.push([{ text: 'LNK456' }, { text: 'testing full name' }, { text: 'testing section' }, { text: 'designation' }, { text: 'testing email' }, { text: 'female' }]);
     return body;
   }
 
   function table(data){
     return {
       table: {
+        layout: 'lightHorizontalLines', 
         dontBreakRows: true,
         keepWithHeaderRows: false,
-        widths: ['6%', '41%', '15%', '14%', '20%', '8%'],
+        widths: ['8%', '41%', '14%', '13%', '20%', '8%'],
         headerRows: 1, 
         body: buildTableBody(data)
       }, 
         fontSize: 9, 
-        absolutePosition: { x: 18, y: 90 },
+        absolutePosition: { x: leftMargin + 10, y: 90 },
         layout: {
           hLineWidth: function(i, node) {
             return (i === 0 || i === node.table.body.length) ? 0.1 : 0.1;
@@ -95,26 +106,31 @@ async function generateReport() {
   }
 
   let dd = {
-    footer: function (currentPage, pageCount) {
+    pageSize: 'A4',
+    pageMargins: [ 40, 20, 40, 30 ],
+    footer: function (currentPage, pageCount) { 
       return {
         margin: 10,
         columns: [
           {
-            text: 'Printed Date: ' + getDateNow() + ' and Time: ' + getTimeNow(),
+            text: 'Printed: ' + getDateNow() + ' at ' + getTimeNow(),
             style: 'planText',
-            alignment: 'left'
-          },
+            // alignment: 'left'
+            absolutePosition: { x: leftMargin + 9, y: 10 }
+          }, 
           {
             text: reportType + ' - ' + reportSubType,
             style: 'planText',
-            alignment: 'center'
+            alignment: 'center',
+            absolutePosition: { y: 10 }
           },
           {
             text: 'Page ' + currentPage.toString() + ' of ' + pageCount,
             style: 'planText',
-            alignment: 'right'
+            // alignment: 'right',
+            absolutePosition: { x: 526, y: 10 }
           }
-        ]
+        ] 
       };  
     },
     content: [
@@ -122,7 +138,7 @@ async function generateReport() {
         canvas: [
           {
             type: 'line',
-            x1: 40, y1: 60,
+            x1: leftMargin + 31, y1: 60,
             x2: 530, y2: 60,
             lineWidth: 0.5
           }
@@ -131,22 +147,22 @@ async function generateReport() {
       {
         image: imagePath + 'Capture.PNG',
         width: 50,
-        absolutePosition: { x: 13, y: 25 }
+        absolutePosition: { x: leftMargin + 8, y: 25 }
       },
       {
         text: reportType + ' - ' + reportSubType,
         style: 'header',
-        absolutePosition: { x: 78, y: 32 }
+        absolutePosition: { x: leftMargin + 73, y: 32 }
       },
       {
         text: schoolName,
         style: 'subHeader',
-        absolutePosition: { x: 78, y: 55 }    
+        absolutePosition: { x: leftMargin + 73, y: 55 }    
       },
       {
         text: 'As At: ' + dueDate,
         style: 'planText',
-        absolutePosition: { x: 465, y: 60 }
+        absolutePosition: { x: leftMargin + 430, y: 60 }
       },
       table(reportData),
     ],
@@ -173,11 +189,14 @@ async function generateReport() {
   let now = new Date();
 
   let pdf = pdfmake.createPdf(dd);
-  pdf.write('../pdfs/LC/staffDetails.pdf');
+  pdf.write('../pdfs/LC/LCstaffDetails-30.pdf');
 
   let runtime = new Date() - now
+  console.log('Report Generated.')
   console.log("Run Time: " + runtime + " ms")
 
 };
 
-module.exports.generateStaffDetailsReport = generateReport;
+// module.exports.generateStaffDetailsReport = generateReport; 
+
+generateReport();
