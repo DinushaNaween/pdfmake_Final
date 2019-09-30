@@ -15,7 +15,12 @@ class OutputDocumentServer extends _OutputDocument.default {
    */
   write(filename) {
     this.getStream().pipe(_fs.default.createWriteStream(filename));
-    this.getStream().end();
+    this.getStream().end(); 
+  }
+
+  pipe(res){
+    this.getStream().pipe(res);
+    this.getStream().end(); 
   }
 
 }

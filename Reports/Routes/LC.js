@@ -3,18 +3,13 @@ const router = express.Router();
 
 var staffReports = require('../LC/staffDetails');
 
-router.post('/StaffDetails', (req, res) => {
+router.get('/StaffDetails', (req, res) => {
+  staffReports.generateStaffDetailsReport(req,res);
+});
 
-  if(req.body.report === 'ok'){
-    staffReports.generateStaffDetailsReport();
-    res.status(200).json({
-      state: true
-    })
-  } else{
-    res.status(500).json({
-      state: false
-    })
-  } 
-})
+
+router.get('/test', (req, res) => {
+res.end('hi')
+});
 
 module.exports = router; 

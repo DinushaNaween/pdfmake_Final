@@ -8,9 +8,11 @@
     "test": "tests"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "datauri": "^2.0.0",
     "express": "^4.17.1",
     "font-converter": "^1.1.1",
+    "fs": "0.0.1-security",
     "gulp-util": "^3.0.8",
     "iconv-lite": "^0.5.0",
     "linebreak": "^1.0.2",

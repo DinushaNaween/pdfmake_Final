@@ -2,6 +2,8 @@ let fetch = require('node-fetch');
 let url = require('../../url');
 let pdfmake = require('../../js/index');
 let moment = require('moment');
+let path = require('path');
+let fs = require('fs');
 
 let fontPath = './Reports/LC/fonts/';
 let imagePath = './Reports/LC/Images/';
@@ -47,16 +49,12 @@ let reportSubType = 'Staff Details';
 let schoolName = 'Ladies College - Colombo';
 let dueDate = moment().format('L');
 
-async function generateReport() {
+async function generateReport(req, res) {
   console.log('Generating Report...');
+  const beforeReq = new Date();
   const reportData = await getStaffData(url.allStaff);
-  console.log(reportData[0]);
-  console.log(reportData[1]);
-  console.log(reportData[2]);
-  console.log(reportData[3]);
-  console.log(reportData[4]);
-  console.log(reportData[5]);
-  console.log(reportData[6]);
+  const fetchTime = new Date() - beforeReq;
+  console.log('Data received in: ' + fetchTime + ' ms')
 
   function buildTableBody(data){
     let body = [];
@@ -75,10 +73,6 @@ async function generateReport() {
 
       body.push(dataRow);
     }
-
-    // body.push([{ text: 'L456' }, { text: 'testing full name' }, { text: 'testing section' }, { text: 'designation' }, { text: 'testing email' }, { text: 'female' }]);
-    // body.push([{ text: 'LN456' }, { text: 'testing full name' }, { text: 'testing section' }, { text: 'designation' }, { text: 'testing email' }, { text: 'female' }]);
-    // body.push([{ text: 'LNK456' }, { text: 'testing full name' }, { text: 'testing section' }, { text: 'designation' }, { text: 'testing email' }, { text: 'female' }]);
     return body;
   }
 
@@ -186,17 +180,12 @@ async function generateReport() {
     }
   }
 
-  let now = new Date();
+  let now = new Date(); 
 
   let pdf = pdfmake.createPdf(dd);
-  pdf.write('../pdfs/LC/LCstaffDetails-30.pdf');
-
-  let runtime = new Date() - now
-  console.log('Report Generated.')
-  console.log("Run Time: " + runtime + " ms")
-
+  console.log('Reading..');
+  pdf.pipe(res);
+    console.log('DONE..');
 };
-
-// module.exports.generateStaffDetailsReport = generateReport; 
-
-generateReport();
+ 
+module.exports.generateStaffDetailsReport = generateReport; 
