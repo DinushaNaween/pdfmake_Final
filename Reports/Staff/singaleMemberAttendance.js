@@ -1,12 +1,12 @@
-var fetch = require('node-fetch');
-var url = require('../../url');
-var pdfmake = require('../../js/index');
-var moment = require('moment');
+let fetch = require('node-fetch');
+let url = require('../../url');
+let pdfmake = require('../../js/index');
+let moment = require('moment');
 
 let fontPath = './Reports/LC/fonts/';
 let imagePath = './Reports/LC/Images/';
 
-var fonts = {
+let fonts = {
   Roboto: {
     normal: fontPath + 'Roboto-Regular.ttf',
     bold: fontPath + 'Roboto-Medium.ttf',
@@ -23,17 +23,14 @@ var fonts = {
  
 pdfmake.setFonts(fonts);
 
-var startDay = '2019-05-23';
-var endDay = '2019-06-17';
-var staffNo = 90;
+const getData = async (url, startDay, endDay, staffNo) => {
 
-var body = {
-  "startDay": startDay,
-  "endDay": endDay,
-  "staffNo": staffNo
-}
+  let body = {
+    "startDay": startDay,
+    "endDay": endDay,
+    "staffNo": staffNo
+  }
 
-const getData = async url => {
   try {
     const response = await fetch(url, {
       method: 'post',
@@ -55,24 +52,33 @@ function getTimeNow(){
   return moment().format('LT');
 }
 
-var reportType = 'Staff';
-var schoolName = 'Ladies College - Colombo';
-var dueDate = 'From: ' + startDay + '   To: ' + endDay;
+let reportType = 'Staff';
+let schoolName = 'Ladies College - Colombo';
 
-async function generateReport() {
-  const reportData = await getData(url.singlePersonAttendance);
-  // console.log(reportData);
+async function generateReport(req, res) {
+  console.log('Generating Report...');
+  const beforeReq = new Date();
 
-  var reportSubType = 'Attendance Report - '+ reportData[0].staffName;
-  var idForFooter = reportData[0].staffNo;
+  let startDay = req.body.startDay;
+  let endDay = req.body.endDay;
+  let staffNo = req.body.staffNo;
+  let dueDate = 'From: ' + startDay + '   To: ' + endDay;
+
+  const reportData = await getData(url.singlePersonAttendance, startDay, endDay, staffNo);
+
+  const fetchTime = new Date() - beforeReq;
+  console.log('Data received in: ' + fetchTime + ' ms')
+
+  let reportSubType = 'Attendance Report - '+ reportData[0].staffName;
+  let idForFooter = reportData[0].staffNo;
 
   function buildTableBody(data){
-    var body = [];
+    let body = [];
 
     body.push([{ text: 'No', style: 'tableHeader', alignment: 'center' }, { text: 'Punch date', style: 'tableHeader', alignment: 'center' }, { text: 'In Time', style: 'tableHeader', alignment: 'center' }, { text: 'Out Time', style: 'tableHeader', alignment: 'center' }])
 
-    for(var i=0; i<data.length; i++){
-      var dataRow = [];
+    for(let i=0; i<data.length; i++){
+      let dataRow = [];
 
       dataRow.push({ text: i+1, alignment: 'center' });
       dataRow.push({ text: data[i].punchDate.slice(0,10), alignment: 'center' });
@@ -105,7 +111,7 @@ async function generateReport() {
     }
   }
 
-  var dd = {
+  let dd = {
     footer: function (currentPage, pageCount) {
       return {
         margin: 10,
@@ -182,13 +188,12 @@ async function generateReport() {
     }
   }
 
-  var now = new Date();
-
-  var pdf = pdfmake.createPdf(dd);
-  pdf.write('../pdfs/Staff/LCsinglePersonAttendance.pdf');
-
-  var runtime = new Date() - now
-  console.log("Run Time: " + runtime + " ms")
+  let now = new Date(); 
+  let pdf = pdfmake.createPdf(dd);
+  pdf.pipe(res);  
+  let runtime = new Date() - now;
+  console.log("Report generated in: " + runtime + " ms");
+  console.log('DONE..');
 };
 
 module.exports.generateSingleMemberAttendanceReport = generateReport;

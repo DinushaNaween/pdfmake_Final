@@ -1,12 +1,12 @@
-var fetch = require('node-fetch');
-var url = require('../../url');
-var pdfmake = require('../../js/index');
-var moment = require('moment');
+let fetch = require('node-fetch');
+let url = require('../../url');
+let pdfmake = require('../../js/index');
+let moment = require('moment');
 
 let fontPath = './Reports/LC/fonts/';
 let imagePath = './Reports/LC/Images/';
 
-var fonts = {
+let fonts = {
   Roboto: {
     normal: fontPath + 'Roboto-Regular.ttf',
     bold: fontPath + 'Roboto-Medium.ttf',
@@ -23,15 +23,13 @@ var fonts = {
 
 pdfmake.setFonts(fonts);
 
-var startDay = '2019-05-23';
-var endDay = '2019-05-26';
+const getData = async (url, startDay, endDay) => {
 
-var body = {
-  "startDay": startDay,
-  "endDay": endDay
-}
+  let body = {
+    "startDay": startDay,
+    "endDay": endDay
+  }
 
-const getData = async url => {
   try {
     const response = await fetch(url, {
       method: 'post',
@@ -53,22 +51,31 @@ function getTimeNow(){
   return moment().format('LT');
 }
 
-var reportType = 'Staff';
-var reportSubType = 'Attendance Report';
-var schoolName = 'Ladies College - Colombo';
-var dueDate = 'From: ' + startDay + '   To: ' + endDay;
+let reportType = 'Staff';
+let reportSubType = 'Attendance Report';
+let schoolName = 'Ladies College - Colombo';
 
-async function generateReport() {
-  const reportData = await getData(url.periodAttendance);
-  // console.log(reportData);
+
+async function generateReport(req, res) {
+  console.log('Generating Report...');
+  const beforeReq = new Date();
+
+  let startDay = req.body.startDay;
+  let endDay = req.body.endDay;
+  let dueDate = 'From: ' + startDay + '   To: ' + endDay;
+
+  const reportData = await getData(url.periodAttendance, startDay, endDay);
+
+  const fetchTime = new Date() - beforeReq;
+  console.log('Data received in: ' + fetchTime + ' ms')
 
   function buildTableBody(data){
-    var body = [];
+    let body = [];
 
     body.push([{ text: 'No', style: 'tableHeader', alignment: 'center' }, { text: 'Staff No', style: 'tableHeader', alignment: 'center' },{ text: 'Staff Name', style: 'tableHeader', alignment: 'center' }, { text: 'Punch date', style: 'tableHeader', alignment: 'center' }, { text: 'In Time', style: 'tableHeader', alignment: 'center' }, { text: 'Out Time', style: 'tableHeader', alignment: 'center' }])
 
-    for(var i=0; i<data.length; i++){
-      var dataRow = [];
+    for(let i=0; i<data.length; i++){
+      let dataRow = [];
 
       dataRow.push({ text: i+1, alignment: 'center' });
       dataRow.push({ text: data[i].staffNo, alignment: 'center' });
@@ -103,7 +110,7 @@ async function generateReport() {
     }
   }
 
-  var dd = {
+  let dd = {
     footer: function (currentPage, pageCount) {
       return {
         margin: 10,
@@ -181,13 +188,12 @@ async function generateReport() {
 
   }
 
-  var now = new Date();
-
-  var pdf = pdfmake.createPdf(dd);
-  pdf.write('../pdfs/Staff/LCperiodAttendance.pdf');
-
-  var runtime = new Date() - now
-  console.log("Run Time: " + runtime + " ms")
+  let now = new Date(); 
+  let pdf = pdfmake.createPdf(dd);
+  pdf.pipe(res);  
+  let runtime = new Date() - now;
+  console.log("Report generated in: " + runtime + " ms");
+  console.log('DONE..');
 };
 
 module.exports.generatePeriodAttendanceReport = generateReport; 

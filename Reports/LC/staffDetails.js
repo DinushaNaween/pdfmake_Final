@@ -19,7 +19,7 @@ let fonts = {
   Tinos: {
     normal: fontPath + 'Tinos-Regular.ttf',
     bold: fontPath + 'Tinos-Bold.ttf',
-    italics: fontPath + 'Tinos-Italic.ttf',
+    italics: fontPath + 'Tinos-Italic.ttf', 
     bolditalics: fontPath + 'Tinos-BoldItalic.ttf'
   }
 };  
@@ -53,6 +53,7 @@ async function generateReport(req, res) {
   console.log('Generating Report...');
   const beforeReq = new Date();
   const reportData = await getStaffData(url.allStaff);
+  
   const fetchTime = new Date() - beforeReq;
   console.log('Data received in: ' + fetchTime + ' ms')
 
@@ -61,7 +62,7 @@ async function generateReport(req, res) {
 
     body.push([{ text: 'ID', style: 'tableHeader' }, { text: 'Full Name', style: 'tableHeader' }, { text: 'Section', style: 'tableHeader' }, { text: 'Designation', style: 'tableHeader' }, { text: 'E-Mail', style: 'tableHeader' }, { text: 'Gender', style: 'tableHeader' }])
 
-    for(let i=0; i<40; i++){
+    for(let i=0; i<data.length-1; i++){
       let dataRow = [];
 
       dataRow.push(data[i].staffId);
@@ -181,11 +182,11 @@ async function generateReport(req, res) {
   }
 
   let now = new Date(); 
-
   let pdf = pdfmake.createPdf(dd);
-  console.log('Reading..');
-  pdf.pipe(res);
-    console.log('DONE..');
+  pdf.pipe(res);  
+  let runtime = new Date() - now;
+  console.log("Report generated in: " + runtime + " ms");
+  console.log('DONE..');
 };
  
 module.exports.generateStaffDetailsReport = generateReport; 
