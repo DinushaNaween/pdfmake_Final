@@ -2,8 +2,6 @@ let fetch = require('node-fetch');
 let url = require('../../url');
 let pdfmake = require('../../js/index');
 let moment = require('moment');
-let path = require('path');
-let fs = require('fs');
 
 let fontPath = './Reports/LC/fonts/';
 let imagePath = './Reports/LC/Images/';
@@ -53,7 +51,7 @@ async function generateReport(req, res) {
   console.log('Generating Report...');
   const beforeReq = new Date();
   const reportData = await getStaffData(url.allStaff);
-  
+
   const fetchTime = new Date() - beforeReq;
   console.log('Data received in: ' + fetchTime + ' ms')
 

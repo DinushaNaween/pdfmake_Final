@@ -8,10 +8,13 @@ const periodAttendance = "http://dev.aspitio.com:81/api/attendance/period";
 
 const singlePersonAttendance = "http://dev.aspitio.com:81/api/attendance/period/staff";
 
+const holidayDetails = "http://dev.aspitio.com:81/api/holiday";
+
 module.exports = {
     allNotes: allNotes,
     allAttendance: allAttendance,
     allStaff: allStaff,
     periodAttendance: periodAttendance,
-    singlePersonAttendance: singlePersonAttendance
+    singlePersonAttendance: singlePersonAttendance,
+    holidayDetails: holidayDetails
 }
