@@ -123,9 +123,10 @@ async function generateReport(req, res) {
             // alignment: 'right',
             absolutePosition: { x: 526, y: 10 }
           }
-        ] 
-      };  
+        ]
+      };
     },
+    // watermark: { text: 'Aspitio (PVT) LTD', color: '#665A94', opacity: 0.1, bold: true, italics: false },
     content: [
       {
         canvas: [
@@ -187,4 +188,4 @@ async function generateReport(req, res) {
   console.log('DONE..');
 };
  
-module.exports.generateStaffDetailsReport = generateReport; 
+module.exports.generateStaffDetailsReport = generateReport;

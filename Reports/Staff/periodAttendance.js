@@ -2,7 +2,6 @@ let fetch = require('node-fetch');
 let url = require('../../url');
 let pdfmake = require('../../js/index');
 let moment = require('moment');
-
 let fontPath = './Reports/LC/fonts/';
 let imagePath = './Reports/LC/Images/';
 

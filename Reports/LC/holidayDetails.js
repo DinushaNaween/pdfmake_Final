@@ -3,9 +3,12 @@ let url = require('../../url');
 let pdfmake = require('../../js/index');
 let moment = require('moment');
 
-let fontPath = './fonts/';
-let imagePath = './Images/';
+let fontPath = './Reports/LC/fonts/';
+let imagePath = './Reports/LC/Images/';
 let leftMargin = 25;
+
+// let fontPath = './fonts/';
+// let imagePath = './Images/';
 
 let fonts = {
   Roboto: {
@@ -19,12 +22,6 @@ let fonts = {
     bold: fontPath + 'Tinos-Bold.ttf',
     italics: fontPath + 'Tinos-Italic.ttf', 
     bolditalics: fontPath + 'Tinos-BoldItalic.ttf'
-  },
-  ARIALUNI: {
-    normal: fontPath + 'ARIALUNI.ttf',
-    bold: fontPath + 'ARIALUNI.ttf',
-    italics: fontPath + 'ARIALUNI.ttf', 
-    bolditalics: fontPath + 'ARIALUNI.ttf'
   }
 };  
 
@@ -63,13 +60,13 @@ async function generateReport(req, res) {
 
   function checkMark(data){
     if(data == 1){
-      return { text: '✓', style: 'checkMark', alignment: 'center' }
+      return { image: imagePath + 'checkmark480.png', fit: [10, 10], alignment: 'center' }
     } else {
-      return { text: '', style: 'checkMark', alignment: 'center' }
+      return { text: '', alignment: 'center' }
     }
   }
 
-  function buildTableBody(data){
+  function buildTableBody(data){ 
     let body = [];
 
     body.push([{ text: 'ID', style: 'tableHeader' }, { text: 'Holiday Date', style: 'tableHeader' }, { text: 'Holiday Name', style: 'tableHeader' }, { text: 'Public', style: 'tableHeader' }, { text: 'Bank', style: 'tableHeader' }, { text: 'Weekend', style: 'tableHeader' }, { text: 'Mercantile', style: 'tableHeader' }, { text: 'Special', style: 'tableHeader' }])
@@ -150,7 +147,7 @@ async function generateReport(req, res) {
             x1: leftMargin + 31, y1: 60,
             x2: 530, y2: 60,
             lineWidth: 0.5
-          }
+          } 
         ], absolutePosition: { x: 34, y: 15 }
       },
       {
@@ -181,9 +178,9 @@ async function generateReport(req, res) {
         fontSize: 11,
         bold: true
       },
-      checkMark: {
-        font: 'ARIALUNI'
-      },
+      // arial: {
+      //   font: 'arial'
+      // },
       planText: {
         fontSize: 10
       }
@@ -195,13 +192,13 @@ async function generateReport(req, res) {
 
   let now = new Date(); 
   let pdf = pdfmake.createPdf(dd);
-  pdf.write('../../../pdfs/LC/HolidayDetails.pdf')
-  // pdf.pipe(res);  
+  // pdf.write('../../../pdfs/LC/HolidayDetails.pdf')
+  pdf.pipe(res);  
   let runtime = new Date() - now;
   console.log("Report generated in: " + runtime + " ms");
   console.log('DONE..');
 };
- 
-// module.exports.generateStaffDetailsReport = generateReport; 
 
-generateReport()
+module.exports.generateHolidayDetailsReport = generateReport; 
+
+// generateReport()
