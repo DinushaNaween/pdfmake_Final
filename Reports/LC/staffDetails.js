@@ -3,9 +3,20 @@ let url = require('../../url');
 let pdfmake = require('../../js/index');
 let moment = require('moment');
 
+/**
+ * fontPath and imagePath is to define path eith respect to server.js file.
+ * router access files in local storage with respect to server file
+ */
+
 let fontPath = './Reports/LC/fonts/';
 let imagePath = './Reports/LC/Images/';
 let leftMargin = 30;
+
+/** 
+ * fonts variable contains all fonts that using in this report card.
+ * each one must have normal, bold, italic, boldItalic properties.
+ * it doesn't matter all 4 propeties are directed to one file.
+ */
 
 let fonts = {
   Roboto: {
@@ -22,7 +33,15 @@ let fonts = {
   }
 };  
 
+/**
+ * introduce fonts to pdfmake
+ */
+
 pdfmake.setFonts(fonts);
+
+/**
+ * this async function is to get data from api endpoint
+ */
 
 const getStaffData = async url => {
   try {
@@ -47,13 +66,21 @@ let reportSubType = 'Staff Details';
 let schoolName = 'Ladies College - Colombo';
 let dueDate = moment().format('L');
 
+/**
+ * main function to generate report
+ */
+
 async function generateReport(req, res) {
   console.log('Generating Report...');
   const beforeReq = new Date();
-  const reportData = await getStaffData(url.allStaff);
+  const reportData = await getStaffData(url.allStaff); //request data to generate report
 
   const fetchTime = new Date() - beforeReq;
   console.log('Data received in: ' + fetchTime + ' ms')
+
+  /**
+   * create table body
+   */
 
   function buildTableBody(data){
     let body = [];
@@ -74,6 +101,10 @@ async function generateReport(req, res) {
     }
     return body;
   }
+
+  /**
+   * pdfmake table creating function, in this section any special layouts, special characteristic, column withs, no of table row are need to define
+   */
 
   function table(data){
     return {
@@ -98,18 +129,22 @@ async function generateReport(req, res) {
     }
   }
 
+  /**
+   * dd = docDefinition is the structure of whole report.
+   * every part of the report must define here
+   */
+
   let dd = {
-    pageSize: 'A4',
-    pageMargins: [ 40, 20, 40, 30 ],
-    footer: function (currentPage, pageCount) { 
+    pageSize: 'A4',   //page size
+    pageMargins: [ 40, 20, 40, 30 ],   //page margin
+    footer: function (currentPage, pageCount) {       //footer defines elements in footer
       return {
         margin: 10,
         columns: [
           {
             text: 'Printed: ' + getDateNow() + ' at ' + getTimeNow(),
             style: 'planText',
-            // alignment: 'left'
-            absolutePosition: { x: leftMargin + 9, y: 10 }
+            absolutePosition: { x: leftMargin + 9, y: 10 }    //positioning inside page
           }, 
           {
             text: reportType + ' - ' + reportSubType,
@@ -120,16 +155,14 @@ async function generateReport(req, res) {
           {
             text: 'Page ' + currentPage.toString() + ' of ' + pageCount,
             style: 'planText',
-            // alignment: 'right',
             absolutePosition: { x: 526, y: 10 }
           }
         ]
       };
     },
-    // watermark: { text: 'Aspitio (PVT) LTD', color: '#665A94', opacity: 0.1, bold: true, italics: false },
-    content: [
+    content: [     //content of the report excluding footer
       {
-        canvas: [
+        canvas: [          //drow shapes using canvas
           {
             type: 'line',
             x1: leftMargin + 31, y1: 60,
@@ -139,7 +172,7 @@ async function generateReport(req, res) {
         ], absolutePosition: { x: 34, y: 15 }
       },
       {
-        image: imagePath + 'Capture.PNG',
+        image: imagePath + 'Capture.PNG',      //add image
         width: 50,
         absolutePosition: { x: leftMargin + 8, y: 25 }
       },
@@ -158,9 +191,9 @@ async function generateReport(req, res) {
         style: 'planText',
         absolutePosition: { x: leftMargin + 430, y: 60 }
       },
-      table(reportData),
+      table(reportData),     //add table
     ],
-    styles: {
+    styles: {       //styles sorted into categeries
       header: {
         fontSize: 14
       },
@@ -181,8 +214,8 @@ async function generateReport(req, res) {
   }
 
   let now = new Date(); 
-  let pdf = pdfmake.createPdf(dd);
-  pdf.pipe(res);  
+  let pdf = pdfmake.createPdf(dd);     //create pdf report
+  pdf.pipe(res);                       //add report to responce
   let runtime = new Date() - now;
   console.log("Report generated in: " + runtime + " ms");
   console.log('DONE..');
