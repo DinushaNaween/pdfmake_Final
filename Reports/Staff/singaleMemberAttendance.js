@@ -59,9 +59,17 @@ async function generateReport(req, res) {
   console.log('Generating Report...');
   const beforeReq = new Date();
 
-  let startDay = req.body.startDay;
-  let endDay = req.body.endDay;
-  let staffNo = req.body.staffNo;
+  let data = req.body;
+
+  if(data.data){
+    data = JSON.parse(data.data);
+  }
+
+  console.log(data);
+
+  let startDay = data.startDay;
+  let endDay = data.endDay;
+  let staffNo = data.staffNo;
   let dueDate = 'From: ' + startDay + '   To: ' + endDay;
 
   const reportData = await getData(url.singlePersonAttendance, startDay, endDay, staffNo);
