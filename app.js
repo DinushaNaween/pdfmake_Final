@@ -16,8 +16,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/LC', LCRoutes);
-app.use('/Staff', StaffRoutes);
+app.use('/lc', LCRoutes);
+app.use('/staff', StaffRoutes);
 
 
 module.exports = app;
