@@ -5,12 +5,12 @@ API endpoints
 
 1. Get all staff details<br>
 
-  * endpoint: '/LC/StaffDetails'
+  * endpoint: '/lc/staff-details'
   * method: GET<br><br>
 
 2. Get period attendance of all employee
 
-  * endpoint: '/Staff/PeriodAttendance'
+  * endpoint: '/staff/period-attendance'
   * method: POST
   * body: <br>
           {<br>
@@ -20,7 +20,7 @@ API endpoints
 
 3. Get single employee attendance<br>
 
-  * endpoint: '/Staff/SingleMemberAttendance'
+  * endpoint: '/staff/individual-attendance'
   * method: POST
   * body: <br>
           {<br>
