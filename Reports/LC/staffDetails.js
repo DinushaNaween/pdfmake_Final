@@ -74,7 +74,7 @@ async function generateReport(req, res) {
   console.log('Generating Report...');
   const beforeReq = new Date();
   const reportData = await getStaffData(url.allStaff); //request data to generate report
-
+  // console.log(reportData);
   const fetchTime = new Date() - beforeReq;
   console.log('Data received in: ' + fetchTime + ' ms')
 
@@ -90,7 +90,7 @@ async function generateReport(req, res) {
     for(let i=0; i<data.length-1; i++){
       let dataRow = [];
 
-      dataRow.push(data[i].staffId);
+      dataRow.push(data[i].staffNo);
       dataRow.push(data[i].fullName); 
       dataRow.push(data[i].section);
       dataRow.push(data[i].designation);
