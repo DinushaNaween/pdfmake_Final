@@ -1,14 +1,14 @@
-const allNotes = "http://dev.aspitio.com:82/api/note/";
+const allNotes = "https://dev.aspitio.com:82/api/note/";
 
-const allAttendance = "http://dev.aspitio.com:81/api/attendance";
+const allAttendance = "https://dev.aspitio.com:81/api/attendance";
 
-const allStaff = "http://dev.aspitio.com:81/api/staff";
+const allStaff = "https://dev.aspitio.com:81/api/staff";
 
-const periodAttendance = "http://dev.aspitio.com:81/api/attendance/period";
+const periodAttendance = "https://dev.aspitio.com:81/api/attendance/period";
 
-const singlePersonAttendance = "http://dev.aspitio.com:81/api/attendance/period/staff";
+const singlePersonAttendance = "https://dev.aspitio.com:81/api/attendance/period/staff";
 
-const holidayDetails = "http://dev.aspitio.com:81/api/holiday";
+const holidayDetails = "https://dev.aspitio.com:81/api/holiday";
 
 module.exports = {
     allNotes: allNotes,
