@@ -22,7 +22,7 @@ let fonts = {
 
 pdfmake.setFonts(fonts);
 
-const getData = async (url, startDay, endDay) => {
+const getData = async (url, startDay, endDay, token) => {
 
   let body = {
     "startDay": startDay,
@@ -33,7 +33,8 @@ const getData = async (url, startDay, endDay) => {
     const response = await fetch(url, {
       method: 'post',
       body:    JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token },
     });
     const json = await response.json();
     return (json.data);
@@ -66,12 +67,13 @@ async function generateReport(req, res) {
   }
 
   console.log(data);
+  let token = data.token;
 
   let startDay = data.startDay;
   let endDay = data.endDay;
   let dueDate = 'From: ' + startDay + '   To: ' + endDay;
 
-  const reportData = await getData(url.periodAttendance, startDay, endDay);
+  const reportData = await getData(url.periodAttendance, startDay, endDay, token);
 
   const fetchTime = new Date() - beforeReq;
   console.log('Data received in: ' + fetchTime + ' ms')

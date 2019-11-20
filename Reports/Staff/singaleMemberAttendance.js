@@ -23,7 +23,7 @@ let fonts = {
  
 pdfmake.setFonts(fonts);
 
-const getData = async (url, startDay, endDay, staffNo) => {
+const getData = async (url, startDay, endDay, staffNo, token) => {
 
   let body = {
     "startDay": startDay,
@@ -35,7 +35,8 @@ const getData = async (url, startDay, endDay, staffNo) => {
     const response = await fetch(url, {
       method: 'post',
       body:    JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token },
     });
     const json = await response.json();
     return (json.data);
@@ -53,7 +54,7 @@ function getTimeNow(){
 }
 
 let reportType = 'Staff';
-let schoolName = 'Ladies College - Colombo';
+let schoolName = 'Test School - Colombo';
 
 async function generateReport(req, res) {
   console.log('Generating Report...');
@@ -66,14 +67,16 @@ async function generateReport(req, res) {
   }
 
   console.log(data);
+  let token = data.token;
 
   let startDay = data.startDay;
   let endDay = data.endDay;
   let staffNo = data.staffNo;
   let dueDate = 'From: ' + startDay + '   To: ' + endDay;
 
-  const reportData = await getData(url.singlePersonAttendance, startDay, endDay, staffNo);
+  const reportData = await getData(url.singlePersonAttendance, startDay, endDay, staffNo, token);
 
+  console.log(reportData);
   const fetchTime = new Date() - beforeReq;
   console.log('Data received in: ' + fetchTime + ' ms')
 
@@ -154,7 +157,7 @@ async function generateReport(req, res) {
         ], absolutePosition: { x: 34, y: 15 }
       },
       {
-        image: imagePath + 'Capture.PNG',
+        image: imagePath + 'test_school.png',
         width: 50,
         absolutePosition: { x: 13, y: 25 }
       },

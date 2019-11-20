@@ -2,7 +2,7 @@ const allNotes = "https://dev.aspitio.com:82/api/note/";
 
 const allAttendance = "https://dev.aspitio.com:91/api/attendance";
 
-const allStaff = "https://dev.aspitio.com:81/api/staff";
+const allStaff = "https://dev.aspitio.com:91/api/staff";
 
 const periodAttendance = "https://dev.aspitio.com:91/api/attendance/period";
 

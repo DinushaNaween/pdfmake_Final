@@ -27,9 +27,13 @@ let fonts = {
 
 pdfmake.setFonts(fonts);
 
-const getStaffData = async url => {
+const getStaffData = async (url, token) => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: 'get',
+      headers: { 'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token },
+    });
     const json = await response.json();
     return (json.data);
   } catch (error) {
@@ -47,14 +51,24 @@ function getTimeNow(){
  
 let reportType = 'Staff';
 let reportSubType = 'Holiday Details';
-let schoolName = 'Ladies College - Colombo';
+let schoolName = 'Test School - Colombo';
 let dueDate = moment().format('L');
 
 async function generateReport(req, res) {
+
+  let data = req.body;
+
+  if(data.data){
+    data = JSON.parse(data.data);
+  }
+
+  console.log(data);
+  let token = data.token;
+
   console.log('Generating Report...');
   const beforeReq = new Date();
-  const reportData = await getStaffData(url.holidayDetails);
-
+  const reportData = await getStaffData(url.holidayDetails, token);
+  // console.log(reportData);
   const fetchTime = new Date() - beforeReq;
   console.log('Data received in: ' + fetchTime + ' ms')
 
@@ -69,15 +83,16 @@ async function generateReport(req, res) {
   function buildTableBody(data){ 
     let body = [];
 
-    body.push([{ text: 'ID', style: 'tableHeader' }, { text: 'Holiday Date', style: 'tableHeader' }, { text: 'Holiday Name', style: 'tableHeader' }, { text: 'Public', style: 'tableHeader' }, { text: 'Bank', style: 'tableHeader' }, { text: 'Weekend', style: 'tableHeader' }, { text: 'Mercantile', style: 'tableHeader' }, { text: 'Special', style: 'tableHeader' }])
+    body.push([{ text: 'ID', style: 'tableHeader' }, { text: 'Start Date', style: 'tableHeader' }, { text: 'End Date', style: 'tableHeader' }, { text: 'Holiday Name', style: 'tableHeader' }, { text: 'Public', style: 'tableHeader' }, { text: 'Bank', style: 'tableHeader' }, { text: 'Weekend', style: 'tableHeader' }, { text: 'Mercantile', style: 'tableHeader' }, { text: 'Special', style: 'tableHeader' }])
 
     for(let i=0; i<data.length; i++){
       let dataRow = [];
 
       dataRow.push(i+1);
-      dataRow.push({ text: data[i].holidayDate.slice(0,10) }); 
+      dataRow.push({ text: data[i].startDate.slice(0,10) });
+      dataRow.push({ text: data[i].endDate.slice(0,10) });  
       dataRow.push(data[i].holidayName);
-      dataRow.push(checkMark(data[i].isPublic));
+      dataRow.push(checkMark(data[i].isPublic)); 
       dataRow.push(checkMark(data[i].isBank));
       dataRow.push(checkMark(data[i].isWeekend));
       dataRow.push(checkMark(data[i].isMercantile));
@@ -94,7 +109,7 @@ async function generateReport(req, res) {
         layout: 'lightHorizontalLines', 
         dontBreakRows: true,
         keepWithHeaderRows: false,
-        widths: ['5%', '15%', '20%', '13%', '13%', '13%', '13%', '13%'],
+        widths: ['4%', '12%', '12%', '18%', '11%', '11%', '12%', '13%', '11%'],
         headerRows: 1, 
         body: buildTableBody(data)
       }, 
@@ -147,11 +162,11 @@ async function generateReport(req, res) {
             x1: leftMargin + 31, y1: 60,
             x2: 530, y2: 60,
             lineWidth: 0.5
-          } 
+          }
         ], absolutePosition: { x: 34, y: 15 }
       },
       {
-        image: imagePath + 'Capture.PNG',
+        image: imagePath + 'test_school.png',
         width: 50,
         absolutePosition: { x: leftMargin + 8, y: 25 }
       },

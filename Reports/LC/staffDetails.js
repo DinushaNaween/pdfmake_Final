@@ -43,13 +43,18 @@ pdfmake.setFonts(fonts);
  * this async function is to get data from api endpoint
  */
 
-const getStaffData = async url => {
+const getStaffData = async (url, token) => {
+
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: 'get',
+      headers: { 'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token },
+    });
     const json = await response.json();
     return (json.data);
   } catch (error) {
-    console.log(error);
+    console.log(error); 
   }
 };
 
@@ -63,7 +68,7 @@ function getTimeNow(){
  
 let reportType = 'Information';
 let reportSubType = 'Staff Details';
-let schoolName = 'Ladies College - Colombo';
+let schoolName = 'Test School - Colombo';
 let dueDate = moment().format('L');
 
 /**
@@ -71,10 +76,21 @@ let dueDate = moment().format('L');
  */
 
 async function generateReport(req, res) {
+
+  let data = req.body;
+
+  if(data.data){
+    data = JSON.parse(data.data);
+  }
+
+  console.log(data);
+  let token = data.token;
+
   console.log('Generating Report...');
   const beforeReq = new Date();
-  const reportData = await getStaffData(url.allStaff); //request data to generate report
+  const reportData = await getStaffData(url.allStaff, token); //request data to generate report
   // console.log(reportData);
+  console.log(reportData);
   const fetchTime = new Date() - beforeReq;
   console.log('Data received in: ' + fetchTime + ' ms')
 
@@ -87,11 +103,11 @@ async function generateReport(req, res) {
 
     body.push([{ text: 'ID', style: 'tableHeader' }, { text: 'Full Name', style: 'tableHeader' }, { text: 'Section', style: 'tableHeader' }, { text: 'Designation', style: 'tableHeader' }, { text: 'E-Mail', style: 'tableHeader' }, { text: 'Gender', style: 'tableHeader' }])
 
-    for(let i=0; i<data.length-1; i++){
+    for(let i=0; i<data.length; i++){
       let dataRow = [];
 
       dataRow.push(data[i].staffNo);
-      dataRow.push(data[i].fullName); 
+      dataRow.push(data[i].fullName);
       dataRow.push(data[i].section);
       dataRow.push(data[i].designation);
       dataRow.push(data[i].email);
@@ -172,7 +188,7 @@ async function generateReport(req, res) {
         ], absolutePosition: { x: 34, y: 15 }
       },
       {
-        image: imagePath + 'Capture.PNG',      //add image
+        image: imagePath + 'test_school.png',      //add image
         width: 50,
         absolutePosition: { x: leftMargin + 8, y: 25 }
       },
